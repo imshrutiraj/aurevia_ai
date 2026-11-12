@@ -1,0 +1,22 @@
+{
+  "accuracy": 1.0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1_score": 1.0,
+  "classes": [
+    "AI / Machine Learning Intern",
+    "Backend Developer",
+    "Business Analyst",
+    "Data Analyst",
+    "Data Scientist",
+    "Frontend Developer",
+    "Full Stack Developer",
+    "Java Developer",
+    "Machine Learning Engineer",
+    "Python Developer",
+    "Software Development Engineer"
+  ],
+  "num_features": 1544,
+  "training_samples": 264,
+  "test_samples": 66
+}
