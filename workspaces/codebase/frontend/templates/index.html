@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurevia AI — Resume Analyzer</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0d1224; color: #f4f0e8; margin: 0; padding: 2rem; }
+    h1 { color: #d6b77a; }
+    .card { background: #141a2b; border: 1px solid #232a42; border-radius: 12px; padding: 1.5rem; max-width: 640px; }
+    label { display: block; margin: 0.75rem 0 0.25rem; }
+    select, input[type=file], button { font: inherit; }
+    button { margin-top: 1rem; background: #d6b77a; color: #141a2b; border: 0; border-radius: 8px; padding: 0.6rem 1.2rem; cursor: pointer; }
+    pre { background: #0d1224; padding: 1rem; border-radius: 8px; overflow: auto; max-height: 420px; }
+  </style>
+</head>
+<body>
+  <h1>Aurevia AI</h1>
+  <p>AI-powered resume analyzer and career intelligence platform.</p>
+  <div class="card">
+    <form id="upload-form" enctype="multipart/form-data">
+      <label for="resume">Resume (PDF or DOCX, max 16 MB)</label>
+      <input type="file" id="resume" name="resume" accept=".pdf,.docx" required>
+      <label for="target_role">Target role</label>
+      <select id="target_role" name="target_role">
+        {% for role in ["Software Development Engineer", "Frontend Developer", "Backend Developer", "Full Stack Developer", "Data Analyst", "Data Scientist", "Machine Learning Engineer", "AI / Machine Learning Intern", "Python Developer", "Java Developer", "Business Analyst"] %}
+        <option value="{{ role }}">{{ role }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Analyze resume</button>
+    </form>
+    <pre id="result" hidden></pre>
+  </div>
+  <script>
+    document.getElementById("upload-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const out = document.getElementById("result");
+      const form = new FormData(event.target);
+      out.hidden = false;
+      out.textContent = "Analyzing…";
+      try {
+        const up = await fetch("/api/upload", { method: "POST", body: form });
+        const parsed = await up.json();
+        if (!parsed.success) { out.textContent = parsed.error || "Upload failed."; return; }
+        const analysis = new FormData();
+        analysis.append("resume_id", parsed.resume_id);
+        analysis.append("target_role", form.get("target_role"));
+        const res = await fetch("/api/analyze", { method: "POST", body: analysis });
+        out.textContent = JSON.stringify(await res.json(), null, 2);
+      } catch (err) {
+        out.textContent = "Request failed: " + err;
+      }
+    });
+  </script>
+</body>
+</html>
