@@ -1,230 +1,242 @@
-# Aurevia AI — AI-Powered Resume Analyzer & Career Intelligence Platform
 
-Aurevia AI is an advanced, production-ready AI/ML web application engineered to transform candidate resumes into actionable career intelligence. Built with Python, Flask, Scikit-learn, Sentence Transformers, spaCy, NLTK, SQLite, and vanilla ES6+ JavaScript, the platform integrates nine core career intelligence modules alongside advanced product features such as raw job description analysis, resume version comparison, and an interactive AI career companion.
-
----
-
-## 🌟 Key Modules & Capabilities
-
-1. **Resume Intelligence (Module 1)**: Robust PDF (`pdfplumber`) and DOCX (`python-docx`) parsing, extracting candidate contact information, education, structured summaries, and multi-domain technical competencies.
-2. **ATS Compatibility Engine (Module 2)**: Explainable 100-point resume scoring assessing section completeness, keyword relevance, quantifiable impact metrics, and Flesch readability ease.
-3. **Job Match Explorer (Module 3)**: Trained Scikit-learn classification pipeline predicting the candidate's top 5 suitable career roles with confidence scores and required skill comparisons.
-4. **Skill Gap Detector (Module 4)**: Compares existing candidate skills against benchmark target role taxonomies, categorizing gaps by priority and suggesting strategic next steps.
-5. **AI Resume Improver (Module 5)**: Provides side-by-side Before/After transformations for bullet points using Google's XYZ formula, detects weak verbs, and suggests high-impact power action verbs without fabricating achievements.
-6. **Personalized Learning Roadmap (Module 6)**: Generates week-by-week learning milestones organized across Beginner, Intermediate, and Advanced tiers, complete with recommended portfolio capstone projects and industry certifications.
-7. **AI Mock Interview Simulator (Module 7)**: Generates tailored technical, behavioral (STAR method), and HR interview questions. Evaluates candidate answers using Semantic AI embeddings (`Sentence Transformers`) for relevance and clarity with exemplary benchmark answers.
-8. **Personalized Cover Letter Generator (Module 8)**: Synthesizes genuine qualifications, technical skills, and experience into tailored cover letters adapted to target companies and roles.
-9. **Career Dashboard (Module 9)**: Real-time command center featuring interactive Plotly gauge charts, ML role match distributions, Matplotlib skill alignment figures, and historical tracking.
-10. **Additional Intelligence Tools**:
-    - **Job Description Deep Analyzer**: Extracts required skills, experience levels, and degrees from raw job postings.
-    - **Resume Version Comparison**: Semantic difference and keyword addition analysis between two resume versions.
-    - **Aure AI Career Buddy**: Interactive companion connected to the backend for real-time career guidance.
-    - **Markdown Report Exporter**: Downloadable career intelligence audit reports.
-
----
-
-## 🏗️ System Architecture
-
-```mermaid
+Aurevia AI – Resume Analyzer & Career Intelligence Platform
+Aurevia AI is a Python-based career assistance platform that helps job seekers evaluate their resumes, identify skill gaps, explore suitable career opportunities, and prepare for interviews.
+The application combines Natural Language Processing (NLP), Machine Learning, and semantic text analysis to provide practical insights throughout the job application process.
+Instead of focusing only on resume scoring, Aurevia AI brings multiple career preparation tools together in one platform.
+Key Features:
+1. Resume Parsing
+Extracts text and structured information from PDF and DOCX resumes.
+Identifies contact details, education, experience, and technical skills.
+Uses document processing and NLP techniques to organize resume content.
+2. ATS Resume Analysis
+Evaluates resumes using a 100-point scoring system.
+Checks important resume sections and keyword relevance.
+Analyzes measurable achievements and readability.
+Provides suggestions for improving resume compatibility.
+3. Job Role Prediction
+Uses a Scikit-learn classification pipeline to predict suitable career roles.
+Displays the top five predicted roles with confidence scores.
+Compares existing skills with skills required for selected roles.
+4. Skill Gap Analysis
+Identifies missing skills for a selected career path.
+Groups skill gaps according to priority.
+Suggests areas where candidates can focus their learning efforts.
+5. Resume Improvement
+Suggests improvements to resume bullet points.
+Uses the XYZ framework to improve achievement descriptions.
+Identifies weak action verbs and recommends stronger alternatives.
+Preserves the candidate's actual experience rather than inventing achievements.
+6. Personalized Learning Roadmap
+Creates structured learning plans.
+Organizes milestones into Beginner, Intermediate, and Advanced levels.
+Suggests portfolio projects and relevant certifications.
+7. Mock Interview Preparation
+Generates technical, behavioral, and HR interview questions.
+Uses the STAR method for behavioral interview preparation.
+Evaluates answers using semantic similarity.
+Provides reference answers and improvement suggestions.
+8. Cover Letter Generator
+Generates role-specific cover letters.
+Uses the candidate's skills and experience as input.
+Adapts the content to the target position and company.
+9. Career Dashboard
+Displays career-related analysis and historical information.
+Visualizes job role predictions and skill alignment.
+Uses Plotly and Matplotlib for interactive and statistical charts.
+Additional Tools
+Job Description Analyzer: Extracts important skills, qualifications, and experience requirements from job descriptions.
+Resume Comparison: Compares two resume versions and identifies content and keyword differences.
+Aure AI Career Buddy: Provides an interactive interface for career-related assistance.
+Report Export: Generates downloadable career analysis reports in Markdown format.
+Technology Stack
+Category
+Technologies
+Programming Language
+Python, JavaScript
+Backend
+Flask
+Frontend
+HTML5, CSS3, Vanilla JavaScript
+Machine Learning
+Scikit-learn
+NLP
+spaCy, NLTK
+Semantic Analysis
+Sentence Transformers
+Text Processing
+TF-IDF, Cosine Similarity
+Document Parsing
+pdfplumber, python-docx
+Database
+SQLite
+Data Visualization
+Plotly, Matplotlib
+Deployment
+Docker, Render, Railway, AWS
+Project Architecture
+The application follows a modular architecture that separates the frontend, backend processing, machine learning components, and database operations.
+The general processing flow is:
+The user uploads a resume or enters career-related information.
+Flask receives the request and forwards it to the appropriate module.
+The document processing layer extracts and preprocesses the content.
+NLP and machine learning components perform the requested analysis.
+Results are returned to the frontend and displayed through the dashboard.
+Relevant application data is stored in SQLite.
+Architecture Overview
 flowchart TD
-    User["User Browser (HTML5 / CSS3 / Vanilla JS / Plotly)"] -->|Multipart Form Upload / JSON API| FlaskApp["Flask Application (app.py)"]
-    
-    subgraph Document Processing & NLP
-        Parser["ResumeParser (pdfplumber & python-docx)"]
-        Preprocess["Text Preprocessing & Tokenizer (NLTK)"]
-        NLP["NLP Processor & NER (spaCy)"]
-        Skills["SkillExtractor (Multi-Domain Taxonomy)"]
-    end
-    
-    subgraph Machine Learning & Semantic AI
-        TFIDF["SimilarityEngine (TF-IDF & Cosine Similarity)"]
-        MLClassifier["JobPredictor (Scikit-learn Logistic Regression Pipeline)"]
-        DenseEmbed["EmbeddingEngine (Sentence Transformers all-MiniLM-L6-v2)"]
-    end
-    
-    subgraph Relational Persistence
-        DB[("SQLite Database (career_platform.db)")]
-    end
-    
-    subgraph Visual Analytics
-        Charts["CareerChartVisualizer (Plotly & Matplotlib)"]
-    end
-    
-    FlaskApp --> Parser
-    Parser --> Preprocess --> NLP --> Skills
-    Skills --> TFIDF
-    Skills --> MLClassifier
-    NLP --> DenseEmbed
-    
-    FlaskApp --> DB
-    FlaskApp --> Charts
-```
-
----
-
-## 📁 Project Directory Structure
-
-```
-AI-Resume-Analyzer/
-├── app.py                     # Flask application & REST API routes
-├── config.py                  # Environment and application configuration
-├── requirements.txt           # Python dependency specifications
-├── Dockerfile                 # Multi-stage production container definition
-├── Procfile                   # Process file for PaaS deployments (Railway/Heroku)
-├── render.yaml                # Render cloud deployment blueprint
-├── README.md                  # Comprehensive platform documentation
-├── TECH_STACK_IMPLEMENTATION.md # Detailed tech stack verification report
-├── .env.example               # Environment variables template
-├── .gitignore                 # Version control exclusions
+    A[User Interface] --> B[Flask Backend]
+    B --> C[Resume Parser]
+    C --> D[Text Preprocessing]
+    D --> E[NLP Processing]
+    E --> F[Skill Extraction]
+    F --> G[ML Prediction]
+    F --> H[Similarity Analysis]
+    E --> I[Semantic Embeddings]
+    B --> J[SQLite Database]
+    B --> K[Career Analysis Modules]
+    K --> L[Dashboard & Reports]
+    G --> L
+    H --> L
+    I --> L
+Project Structure
+Aurevia-AI/
+│
+├── app.py
+├── config.py
+├── requirements.txt
+├── Dockerfile
+├── Procfile
+├── render.yaml
+├── README.md
+├── TECH_STACK_IMPLEMENTATION.md
+├── .env.example
+├── .gitignore
 │
 ├── frontend/
 │   ├── templates/
-│   │   └── index.html         # Unified single-page Saas UI for all 9 modules
+│   │   └── index.html
 │   └── static/
 │       ├── css/
-│       │   └── style.css      # Celestial theme, 3D visual physics, responsive styling
+│       │   └── style.css
 │       └── js/
-│           └── script.js      # Vanilla JavaScript client orchestration & API bridge
+│           └── script.js
 │
 ├── backend/
-│   ├── resume_parser.py       # PDF/DOCX extraction engine
-│   ├── text_preprocessing.py  # Cleaning, boundary tokenization, stopwords
-│   ├── nlp_processor.py       # Contact info, NER, and section parsing
-│   ├── skill_extractor.py     # Multi-domain skill taxonomy engine
-│   ├── similarity_engine.py   # TF-IDF vectorization and cosine similarity
-│   ├── embedding_engine.py    # Sentence Transformers semantic vector engine
-│   ├── job_predictor.py       # ML role classifier inference
-│   ├── ats_analyzer.py        # ATS compatibility scoring & readability
-│   ├── skill_gap_analyzer.py  # Gap detection & prioritized trajectories
-│   ├── resume_improver.py     # XYZ bullet point and summary enhancer
-│   ├── learning_roadmap.py    # Tiered week-by-week curriculum generator
-│   ├── mock_interview.py      # Q&A generator & semantic evaluation
-│   ├── cover_letter_generator.py # Structured cover letter generator
-│   ├── career_dashboard.py    # Telemetry and state aggregation
-│   └── recommendation_engine.py # Projects, pathways, and JD analyzer
+│   ├── resume_parser.py
+│   ├── text_preprocessing.py
+│   ├── nlp_processor.py
+│   ├── skill_extractor.py
+│   ├── similarity_engine.py
+│   ├── embedding_engine.py
+│   ├── job_predictor.py
+│   ├── ats_analyzer.py
+│   ├── skill_gap_analyzer.py
+│   ├── resume_improver.py
+│   ├── learning_roadmap.py
+│   ├── mock_interview.py
+│   ├── cover_letter_generator.py
+│   ├── career_dashboard.py
+│   └── recommendation_engine.py
 │
 ├── database/
-│   ├── db.py                  # SQLite connection and schema migrations
-│   └── models.py              # Relational models and query methods
+│   ├── db.py
+│   └── models.py
 │
 ├── ml_models/
-│   ├── train_model.py         # Dataset generation & ML training pipeline
-│   ├── datasets/              # Labelled resume-job training datasets
-│   └── saved_model/           # Serialized joblib classifier & metrics JSON
+│   ├── train_model.py
+│   ├── datasets/
+│   └── saved_model/
 │
 ├── visualizations/
-│   └── charts.py              # Plotly JSON and Matplotlib base64 generators
+│   └── charts.py
 │
-├── uploads/                   # Temporary upload directory
-├── reports/                   # Exported career audit reports
+├── uploads/
+├── reports/
+│
 └── tests/
-    └── test_app.py            # Comprehensive 15-point unit & integration test suite
-```
-
----
-
-## 🚀 Getting Started Locally
-
-### 1. Prerequisites
-- Python 3.10, 3.11, 3.12, 3.13, or 3.14.
-- pip package manager.
-
-### 2. Clone / Open Project Directory
-```bash
-cd "C:\Users\hp\.gemini\antigravity\scratch\AI-Resume-Analyzer"
-```
-
-### 3. Create and Activate Virtual Environment (Optional but Recommended)
-```bash
+    └── test_app.py
+Getting Started
+Follow these steps to run Aurevia AI locally.
+Prerequisites
+Make sure you have installed:
+Python 3.10 or later (using a supported version).
+pip package manager.
+Git (if cloning the repository).
+1. Clone the Repository
+git clone YOUR_REPOSITORY_URL
+Navigate into the project directory:
+cd Aurevia-AI
+2. Create a Virtual Environment
 python -m venv venv
-# On Windows:
+Activate it on Windows:
 venv\Scripts\activate
-# On Linux / macOS:
+On macOS or Linux:
 source venv/bin/activate
-```
-
-### 4. Install Dependencies
-```bash
+3. Install Dependencies
 pip install -r requirements.txt
-```
-
-### 5. Train the Machine Learning Classifier
-```bash
+4. Configure Environment Variables
+Use .env.example as a reference and create a local .env file if required by the application.
+Do not upload private credentials, API keys, or sensitive configuration files to GitHub.
+5. Train the Machine Learning Model
 python ml_models/train_model.py
-```
-*Note: This generates the labelled dataset across 11 roles, evaluates model metrics, and saves the trained pipeline to `ml_models/saved_model/job_predictor_model.pkl`.*
-
-### 6. Run the Test Suite
-```bash
-python tests/test_app.py
-```
-*All 15 unit and integration tests should pass with `OK`.*
-
-### 7. Start the Flask Web Server
-```bash
+This runs the model training pipeline and generates the saved classifier and associated evaluation files.
+6. Run the Application
 python app.py
-```
-Open your browser and navigate to:
-```
+Open your browser and visit:
 http://localhost:5000
-```
-
----
-
-## 🚢 Deployment Instructions
-
-### A. Docker Deployment
-```bash
-# Build the Docker image
-docker build -t aurevia-ai-resume-analyzer .
-
-# Run the container
-docker run -d -p 5000:5000 --name aurevia-app aurevia-ai-resume-analyzer
-```
-Navigate to `http://localhost:5000`.
-
-### B. Render Deployment
-1. Connect your GitHub repository to Render.
-2. Select **New Web Service** and choose **Docker** as the runtime.
-3. Render automatically picks up `render.yaml` or `Dockerfile`.
-4. Set environment variable: `PORT = 10000`.
-5. Deploy.
-
-### C. Railway Deployment
-1. Log in to Railway and create a **New Project from GitHub Repo**.
-2. Railway detects the `Dockerfile` and `Procfile`.
-3. Add a persistent volume mounted to `/app/database` if you wish to persist the SQLite database across restarts.
-4. Set `PORT` (Railway provides dynamic port assignment).
-5. Deploy.
-
-### D. AWS Deployment (ECS / Fargate)
-1. Push Docker image to Amazon Elastic Container Registry (ECR).
-2. Create an Amazon ECS Task Definition pointing to the ECR image with 1 vCPU and 2GB RAM.
-3. Launch an ECS Service on AWS Fargate behind an Application Load Balancer (ALB).
-4. Configure an Amazon EFS volume if persistent SQLite storage is required, or configure an Amazon RDS PostgreSQL instance.
-
----
-
-## 🧪 Testing Coverage
-
-The automated test suite in `tests/test_app.py` validates:
-- Text cleaning, tokenization, and stopword removal.
-- Boundary-safe skill extraction across all 8 technical categories.
-- NLP contact detail and education degree detection.
-- TF-IDF and Cosine Similarity computations.
-- Dense semantic similarity via Sentence Transformers / embedding engine.
-- Scikit-learn Job Prediction Pipeline accuracy and confidence scores.
-- 100-point ATS evaluation and section audit.
-- Skill gap detection and priority ranking.
-- XYZ formula bullet point and summary improvements.
-- Learning roadmap tier generation.
-- Mock interview question generation and semantic answer evaluation.
-- Personalized cover letter generation.
-- SQLite database CRUD operations and relational integrity.
-- Flask REST API endpoints and error handlers.
-- DOCX binary document parsing.
-
-Run all tests anytime with:
-```bash
+Running Tests
+To execute the automated test suite:
 python tests/test_app.py
-```
+The test suite is designed to cover:
+Resume text extraction.
+Text preprocessing and tokenization.
+Skill identification.
+NLP-based information extraction.
+TF-IDF and cosine similarity.
+Semantic similarity.
+Job role prediction.
+ATS scoring.
+Skill gap analysis.
+Resume improvement.
+Learning roadmap generation.
+Mock interview evaluation.
+Cover letter generation.
+Database operations.
+Flask application routes.
+DOCX document parsing.
+Run the tests in your local environment to verify the current implementation.
+Deployment
+Aurevia AI includes configuration files for container-based and cloud deployment.
+Docker
+Build the Docker image:
+docker build -t aurevia-ai .
+Run the container:
+docker run -p 5000:5000 aurevia-ai
+Render
+Connect the GitHub repository to Render.
+Create a new Web Service.
+Select Docker as the deployment environment.
+Configure the required environment variables.
+Deploy the application.
+Railway
+Create a new Railway project.
+Connect your GitHub repository.
+Configure the deployment environment.
+Set up persistent storage if required by the database.
+Deploy the application.
+AWS
+The application can also be adapted for deployment using AWS ECS and Fargate with an appropriate container and storage configuration.
+Future Improvements
+Some areas that could extend the platform include:
+Integration with live job listing APIs.
+Support for additional resume formats.
+More detailed resume comparison reports.
+Improved model evaluation using larger and more diverse datasets.
+User authentication and personalized profiles.
+Additional language support.
+Enhanced data privacy and secure document handling.
+Expanded automated testing and API documentation.
+Project Goals
+Aurevia AI aims to make career preparation more structured and accessible by combining resume analysis, skill assessment, job matching, and interview preparation in a single application.
+The focus is on turning resume and career information into useful, understandable recommendations that candidates can act on.
+Aurevia AI – Turning career information into actionable insights.
